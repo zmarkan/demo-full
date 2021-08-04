@@ -1,0 +1,91 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.1.0
+  heroku: circleci/heroku@1.2.5
+  snyk: snyk/snyk@0.1.0
+  docker: circleci/docker@1.5.0
+
+jobs:
+  build-and-test:
+    parameters:
+      node-version:
+        type: string
+        default: "15.10.0"
+    docker:
+      - image: cimg/node:<< parameters.node-version >>
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run test-ci
+      - run:
+          name: Copy tests results for storing
+          command: |
+            mkdir ~/test-results
+            cp test-results.xml ~/test-results/
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results
+  
+  dependency-vulnerability-scan:
+    docker:
+      - image: cimg/node:15.10.0
+    steps:
+      - checkout
+      - node/install-packages
+      - snyk/scan:
+          fail-on-issues: true
+
+  build-docker:
+    executor: docker/docker
+    steps:
+      - checkout
+      - setup_remote_docker
+      - docker/check
+      - docker/build:
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag: 0.1.<< pipeline.number >>
+      - snyk/scan:
+          docker-image-name: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          fail-on-issues: false
+      - docker/push:
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag: 0.1.<< pipeline.number >>
+
+  deploy-to-heroku:
+    executor: heroku/default
+    steps:
+      - setup_remote_docker
+      - heroku/install
+      - heroku/check-authentication
+      - checkout
+      - heroku/push-docker-image:
+          app-name: $HEROKU_APP_NAME  
+          process-types: web
+      - heroku/release-docker-image:
+          app-name: $HEROKU_APP_NAME
+          process-types: web
+
+workflows:
+  node-test-and-deploy:
+    jobs:
+      - build-and-test:
+          matrix:
+            parameters:
+              node-version: ["13.8", "14.2", "15.11"]
+      - dependency-vulnerability-scan
+      - build-docker
+      - hold-for-approval:
+          type: approval
+          requires: 
+            - build-docker
+            - dependency-vulnerability-scan
+          filters:
+            branches:
+              only: main
+      - deploy-to-heroku:
+          requires: 
+            - hold-for-approval
