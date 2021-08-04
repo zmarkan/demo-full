@@ -51,6 +51,8 @@ jobs:
       - snyk/scan:
           docker-image-name: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           fail-on-issues: false
+          monitor-on-build: false
+
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: 0.1.<< pipeline.number >>
