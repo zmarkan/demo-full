@@ -28,4 +28,18 @@ describe("Welcome to CI/CD Server", function() {
   //     assert.strictEqual(true, false);
   //   });  
   // });
+
+
 });
+
+describe("Here be dragons", () => {
+
+  describe("A flakey test", () => {
+
+    let dice = Math.random()
+    let testedValue = dice >= 0.3 ? true : false
+
+    assert.ok(testedValue, `Dice roll  less than 0.3 ${dice}`)
+
+  })
+})
