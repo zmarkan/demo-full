@@ -79,7 +79,10 @@ workflows:
             parameters:
               node-version: ["13.8", "14.2", "15.11"]
       - dependency-vulnerability-scan
-      - build-docker
+      - build-docker:
+          requires:
+            - build-and-test
+            - dependency-vulnerability-scan
       - hold-for-approval:
           type: approval
           requires: 
