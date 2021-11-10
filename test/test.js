@@ -35,7 +35,7 @@ describe("Welcome to CI/CD Server", function() {
       let dice = Math.random()
       let testedValue = dice >= 0.4 ? true : false
   
-      assert.ok(testedValue, `Dice roll  less than 0.3 ${dice}`)
+      assert.ok(testedValue, `Dice roll  less than 0.4 ${dice}`)
     })
   })
 
