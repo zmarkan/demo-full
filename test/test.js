@@ -23,11 +23,11 @@ describe("Welcome to CI/CD Server", function() {
     });  
   });
 
-  describe("Failing test", function (){
-    it("shall not pass", function(){
-      assert.strictEqual(true, false);
-    });  
-  });
+  // describe("Failing test", function (){
+  //   it("shall not pass", function(){
+  //     assert.strictEqual(true, false);
+  //   });  
+  // });
 
   describe("A flakey test", () => {
 
