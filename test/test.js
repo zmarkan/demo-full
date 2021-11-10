@@ -23,16 +23,11 @@ describe("Welcome to CI/CD Server", function() {
     });  
   });
 
-  // describe("Failing test", function (){
-  //   it("shall not pass", function(){
-  //     assert.strictEqual(true, false);
-  //   });  
-  // });
-
-
-});
-
-describe("Here be dragons", () => {
+  describe("Failing test", function (){
+    it("shall not pass", function(){
+      assert.strictEqual(true, false);
+    });  
+  });
 
   describe("A flakey test", () => {
 
@@ -42,4 +37,6 @@ describe("Here be dragons", () => {
     assert.ok(testedValue, `Dice roll  less than 0.3 ${dice}`)
 
   })
-})
+
+
+});

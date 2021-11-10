@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.0550" tests="3" failures="1">
+  <testsuite name="Root Suite" timestamp="2021-11-10T10:48:03" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Welcome to CI/CD Server" timestamp="2021-11-10T10:48:03" tests="0" file="/Users/zmarkan/github/circleci-demo-full/test/test.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="GET /" timestamp="2021-11-10T10:48:03" tests="1" file="/Users/zmarkan/github/circleci-demo-full/test/test.js" time="0.0510" failures="0">
+    <testcase name="Welcome to CI/CD Server GET / returns status code 200" time="0.0510" classname="returns status code 200">
+    </testcase>
+  </testsuite>
+  <testsuite name="welcomeMessage" timestamp="2021-11-10T10:48:03" tests="1" file="/Users/zmarkan/github/circleci-demo-full/test/test.js" time="0.0010" failures="0">
+    <testcase name="Welcome to CI/CD Server welcomeMessage Validate Message" time="0.0010" classname="Validate Message">
+    </testcase>
+  </testsuite>
+  <testsuite name="Failing test" timestamp="2021-11-10T10:48:03" tests="1" file="/Users/zmarkan/github/circleci-demo-full/test/test.js" time="0.0030" failures="1">
+    <testcase name="Welcome to CI/CD Server Failing test shall not pass" time="0.0030" classname="shall not pass">
+      <failure message="Expected values to be strictly equal:
+
+true !== false
+" type="AssertionError"><![CDATA[AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+true !== false
+
+    at Context.<anonymous> (test/test.js:28:14)
+    at processImmediate (internal/timers.js:461:21)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>
