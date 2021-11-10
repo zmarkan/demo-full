@@ -31,11 +31,12 @@ describe("Welcome to CI/CD Server", function() {
 
   describe("A flakey test", () => {
 
-    let dice = Math.random()
-    let testedValue = dice >= 0.3 ? true : false
-
-    assert.ok(testedValue, `Dice roll  less than 0.3 ${dice}`)
-
+    it("works every time, 60% of the time", () => {
+      let dice = Math.random()
+      let testedValue = dice >= 0.4 ? true : false
+  
+      assert.ok(testedValue, `Dice roll  less than 0.3 ${dice}`)
+    })
   })
 
 
