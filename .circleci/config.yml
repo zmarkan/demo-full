@@ -30,24 +30,24 @@ jobs:
       - store_artifacts:
           path: ~/test-results
 
-    run-flaky-test:
-      docker:
-        - image: cimg/node:15.10.0
-      steps:
-        - checkout
-        - node/install-packages
-        - run:
-            command: npm run flaky-test
-        - run:
-            name: Copy tests results for storing
-            command: |
-              mkdir ~/test-results
-              cp test-results.xml ~/test-results/
-            when: always
-        - store_test_results:
-            path: ~/test-results
-        - store_artifacts:
-            path: ~/test-results
+  run-flaky-test:
+    docker:
+      - image: cimg/node:15.10.0
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run flaky-test
+      - run:
+          name: Copy tests results for storing
+          command: |
+            mkdir ~/test-results
+            cp test-results.xml ~/test-results/
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results
   
   dependency-vulnerability-scan:
     docker:
