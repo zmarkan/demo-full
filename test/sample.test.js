@@ -1,19 +1,26 @@
-var request = require("request"),
-    assert = require('assert'),
-    helloWorld = require("../app.js"),
-    base_url = "http://localhost:5000/";
+const axios = require('axios').default
+const assert = require('assert')
+const helloWorld = require("../app.js")
+const base_url = "http://localhost:5000/"
 
 describe("Welcome to CI/CD Server", function() {
 
   describe("GET /", function() {
     it("returns status code 200", function(done) {
-      request.get(base_url, function(error, response, body) {
-        assert.equal(200, response.statusCode);
-        helloWorld.close();
-        done();
-      });
-    });
+      // request.get(base_url, function(error, response, body) {
+      //   assert.equal(200, response.statusCode);
+      //   helloWorld.close();
+      //   done();
+      // });
+      axios.get(base_url).then(
+        (response) => {
+          assert.equal(200, response.status);
+          helloWorld.close();
+        }
+      ).then(done, done)
+    })
   });
+  
 
   describe("welcomeMessage", function (){
     it("Validate Message", function(){
