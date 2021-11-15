@@ -1,4 +1,3 @@
-const request = require("request")
 const axios = require('axios').default
 const assert = require('assert')
 const helloWorld = require("../app.js")
@@ -8,17 +7,17 @@ describe("Welcome to CI/CD Server", function() {
 
   describe("GET /", function() {
     it("returns status code 200", function(done) {
-      request.get(base_url, function(error, response, body) {
-        assert.equal(200, response.statusCode);
-        helloWorld.close();
-        done();
-      });
-      // axios.get(base_url).then(
-      //   (response) => {
-      //     assert.equal(200, response.status);
-      //     helloWorld.close();
-      //   }
-      // ).then(done, done)
+      // request.get(base_url, function(error, response, body) {
+      //   assert.equal(200, response.statusCode);
+      //   helloWorld.close();
+      //   done();
+      // });
+      axios.get(base_url).then(
+        (response) => {
+          assert.equal(200, response.status);
+          helloWorld.close();
+        }
+      ).then(done, done)
     })
   });
   
