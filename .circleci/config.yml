@@ -109,9 +109,13 @@ workflows:
           matrix:
             parameters:
               node-version: ["13.8", "14.2", "15.11"]
-      - dependency-vulnerability-scan
+      - dependency-vulnerability-scan:
+          context: Infosec
       - run-flaky-test
       - build-docker:
+          context: 
+            - docker-deployment
+            - Infosec
           requires:
             - build-and-test
             - dependency-vulnerability-scan
@@ -123,5 +127,7 @@ workflows:
             branches:
               only: main
       - deploy-to-heroku:
+          context:
+            - prod-deployment
           requires: 
             - hold-for-approval
