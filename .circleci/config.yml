@@ -23,7 +23,11 @@ jobs:
             echo $(circleci tests glob "test/**/*.test.js")
             circleci tests glob "test/**/*.test.js" | circleci tests split |
             xargs npm run test-ci
-      
+      - run:
+          name: Copy tests results for storing
+          command: |
+            cp test-results.xml ~/test-results/
+          when: always
       - run:
           name: Process test report
           when: always
