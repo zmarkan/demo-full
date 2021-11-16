@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.1.0
-  heroku: circleci/heroku@1.2.5
+  heroku: circleci/heroku@1.2.6
   snyk: snyk/snyk@0.1.0
   docker: circleci/docker@1.5.0
 
@@ -119,6 +119,7 @@ workflows:
           requires:
             - build-and-test
             - dependency-vulnerability-scan
+            - run-flaky-test
       - hold-for-approval:
           type: approval
           requires: 
