@@ -119,7 +119,6 @@ workflows:
           type: approval
           requires: 
             - build-docker
-            - dependency-vulnerability-scan
           filters:
             branches:
               only: main
