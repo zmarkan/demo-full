@@ -111,7 +111,6 @@ workflows:
               node-version: ["13.8", "14.2", "15.11"]
       - dependency-vulnerability-scan:
           context: Infosec
-      - run-flaky-test
       - build-docker:
           context: 
             - docker-deployment
@@ -119,7 +118,6 @@ workflows:
           requires:
             - build-and-test
             - dependency-vulnerability-scan
-            - run-flaky-test
       - hold-for-approval:
           type: approval
           requires: 
