@@ -102,9 +102,26 @@ jobs:
           app-name: $HEROKU_APP_NAME
           process-types: web
 
+  ping-it:
+    docker: 
+      - image: cimg/base:2021.11
+    steps:
+      - checkout
+      - run:
+          name: Ping another pipeline
+          command: |
+            curl --request POST \
+              --url https://circleci.com/api/v2/project/gh/zmarkan/pinging-me-softly/pipeline \
+              --header 'Circle-Token: $CIRCLECI_API_KEY' \
+              --header 'content-type: application/json' \
+              --data '{"branch":"main","parameters":{"echo-value":"Coming to you live from another pipeline"}}'
+            
+
 workflows:
   node-test-and-deploy:
     jobs:
+      - ping-it:
+          context: circleci-api
       - build-and-test:
           matrix:
             parameters:
