@@ -116,13 +116,9 @@ jobs:
               --header "content-type: application/json" \
               --data '{"branch":"main","parameters":{"image-name":"'$DOCKER_LOGIN"/"$CIRCLE_PROJECT_REPONAME":"0.1.<< pipeline.number >>'"}}'
 
-            
-
 workflows:
   node-test-and-deploy:
     jobs:
-      - trigger-new-pipeline:
-          context: circleci-api
       - build-and-test:
           matrix:
             parameters:
@@ -148,3 +144,8 @@ workflows:
             - prod-deployment
           requires: 
             - hold-for-approval
+      - trigger-new-pipeline:
+          context: 
+            - circleci-api
+          requires:
+            - build-docker
