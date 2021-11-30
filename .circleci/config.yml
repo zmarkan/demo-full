@@ -105,8 +105,8 @@ jobs:
   trigger-new-pipeline:
     docker: 
       - image: cimg/base:2021.11
+    resource_class: small
     steps:
-      - checkout
       - run:
           name: Ping another pipeline
           command: |
