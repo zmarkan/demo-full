@@ -6,6 +6,11 @@ orbs:
   snyk: snyk/snyk@0.1.0
   docker: circleci/docker@1.5.0
 
+parameters:
+  run-schedule:
+    type: boolean
+    default: false
+
 jobs:
   build-and-test:
     parameters:
@@ -119,6 +124,8 @@ jobs:
 
 workflows:
   node-test-and-deploy:
+    when:
+      not: << pipeline.parameters.run-schedule >>
     jobs:
       - ping-it:
           context: circleci-api
@@ -148,3 +155,10 @@ workflows:
           requires: 
             - hold-for-approval
 
+  hourly-tests:
+    when: << pipeline.parameters.run-schedule >>
+    jobs:
+      - build-and-test:
+          matrix:
+            parameters:
+              node-version: ["13.8", "14.2", "15.11"]
