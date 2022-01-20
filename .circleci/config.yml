@@ -107,7 +107,7 @@ jobs:
           app-name: $HEROKU_APP_NAME
           process-types: web
 
-trigger-new-pipeline:
+  trigger-new-pipeline:
     docker: 
       - image: cimg/base:2021.11
     resource_class: small
