@@ -46,6 +46,15 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results
+      
+  run-tests-nosplit:
+    docker: 
+      - image: cimg/node:15.10.0
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run test-ci
 
   run-flaky-test:
     docker:
@@ -130,6 +139,7 @@ workflows:
           matrix:
             parameters:
               node-version: ["13.8", "14.2", "15.11"]
+      - run-tests-nosplit
       - dependency-vulnerability-scan:
           context: Infosec
       - build-docker:
